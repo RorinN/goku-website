@@ -63,13 +63,21 @@
 
 /* --- Stage ------------------------------------------------------------- */
 
-.stage-wrap { position: relative; }
+/* The stage is PINNED, not sticky, on mobile too. A sticky stage scrolls
+   away once its container is passed, which left training mode driving a
+   character you could no longer see. */
+.stage-wrap {
+  position: fixed;
+  top: 49px;
+  left: 0;
+  right: 0;
+  height: 44vh;
+  z-index: 5;
+}
 
 .stage-sticky {
-  position: sticky;
-  top: 49px;
-  height: 56vh;
-  z-index: 1;
+  position: absolute;
+  inset: 0;
   background: var(--ink-2);
   border-bottom: 1px solid var(--ink-line);
 }
@@ -80,23 +88,26 @@
 
 .content {
   position: relative;
-  z-index: 2;
-  padding: 0 var(--gutter) 96px;
+  z-index: 1;
+  /* Clear the pinned stage. */
+  padding: calc(44vh + 69px) var(--gutter) 96px;
+}
+
+/* Land a nav jump below the stage, not underneath it. */
+.content > [data-section] {
+  scroll-margin-top: calc(44vh + 61px);
 }
 
 @media (min-width: 900px) {
   .stage-wrap {
-    position: fixed;
     top: 49px;
+    left: auto;
     right: 0;
     bottom: 0;
     width: 48vw;
-    z-index: 1;
+    height: auto;
   }
   .stage-sticky {
-    position: absolute;
-    inset: 0;
-    height: auto;
     border-bottom: 0;
     border-left: 1px solid var(--ink-line);
   }
@@ -105,11 +116,19 @@
     padding-top: 49px;
     padding-bottom: 140px;
   }
+  .content > [data-section] { scroll-margin-top: 61px; }
+}
+
+/* Landscape phones have too little height to split; shrink the stage. */
+@media (max-width: 899px) and (orientation: landscape) {
+  .stage-wrap { height: 54vh; }
+  .content { padding-top: calc(54vh + 69px); }
+  .content > [data-section] { scroll-margin-top: calc(54vh + 61px); }
 }
 
 /* --- Sections ---------------------------------------------------------- */
 
-.hero { padding: 72px 0 96px; }
+.hero { padding: 24px 0 96px; }
 
 @media (min-width: 900px) { .hero { padding: 120px 0 140px; } }
 
