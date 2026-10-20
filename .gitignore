@@ -1,0 +1,13 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# Generated character assets are large binaries. Keep them out of git and
+# drop them into public/assets/goku/ locally — see docs/HIGGSFIELD.md.
+public/assets/goku/*.glb
+public/assets/goku/*.gltf
+public/assets/goku/*.bin
+public/assets/video/*.mp4
+public/assets/poster/*.jpg
+public/assets/poster/*.png
